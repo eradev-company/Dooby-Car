@@ -7,12 +7,11 @@ services:
     restart: unless-stopped
     volumes:
       - ./config.rviz:/root/.rviz2/default.rviz
-      - ../ros_ws/src:/app/src
+      - ../ros2_ws/src:/app/src
       - ./cyclonedds.xml:/cyclonedds.xml
     ports: 
       - 6080:80
     shm_size: '512m'
-    network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
 
 
   husarnet:
@@ -28,3 +27,4 @@ services:
       - /dev/net/tun
     env_file: 
       - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
+    network_mode: service:foxy  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
