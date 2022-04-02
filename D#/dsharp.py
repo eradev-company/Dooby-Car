@@ -1,7 +1,9 @@
+from time import sleep
 from sly import Lexer, Parser
+import motor
 
 class Lexer(Lexer):
-    tokens = { FORWARD, BACKWARD, LEFT, RIGHT, STOP , ARG, DURING, ENDLINE,}
+    tokens = { FORWARD, BACKWARD, LEFT, RIGHT, STOP , ARG, DURING,}
     ignore = ' \t'
 
     # Tokens
@@ -11,8 +13,8 @@ class Lexer(Lexer):
     RIGHT = r'RIGHT'
     DURING = r'DURING'
     STOP = r'STOP'
-    ARG = r'\d+'
-    ENDLINE = r'\n+'
+    # real number in regex
+    ARG = r'\d+\.\d+|\d+'  
 
     # Ignored pattern
     ignore_newline = r'\n+'
@@ -28,55 +30,82 @@ class Lexer(Lexer):
 class Parser(Parser):
     tokens = Lexer.tokens
     
+    # Grammar rules 
+    '''
+    program := instruction program
+    program := epsilon
+    instruction := FORWARD ARG during
+    instruction := BACKWARD ARG during
+    instruction := LEFT ARG during
+    instruction := RIGHT ARG during
+    instruction := STOP
+    during := epsilon
+    during := DURING ARG
+    '''
 
+    # Grammar actions
+
+    # program := instruction program
     @_('instruction program')
     def program(self, p):
+        motor.stop()
+        sleep(1)
         pass
 
+    # program := empty
     @_('')
     def program(self, p):
         pass
         
-    @_('FORWARD ARG during ENDLINE')
+    # instruction := FORWARD ARG during
+    @_('FORWARD ARG during')
     def instruction(self, p):
-        print("Moving Forward")
-        if p[2]:
-          print("During {} sec".format(p[2]))
-        #define actions here
+        if float(p[1])>100: 
+            print("Speed too high")
+            return
+        delay = p[2] if p[2] else 3
+        print("Moving Forward {}km/h During {} sec".format(p[1],delay))
+        motor.forward(delay, 0 if float(p[1]) == 0 else float(p[1])/2+50)
 
-    @_('BACKWARD ARG during ENDLINE')
+    # instruction := BACKWARD ARG during
+    @_('BACKWARD ARG during')
     def instruction(self, p):
-        print("Moving Backward")
-        if p[2]:
-          print("During {} sec".format(p[2]))
-          #define actions here
+        if float(p[1])>100: 
+            print("Speed too high")
+            return
+        delay = p[2] if p[2] else 3
+        print("Moving Backward {}km/h During {} sec".format(p[1],delay))
+        motor.backward(delay, float(p[1]))
 
-    @_('RIGHT ARG during ENDLINE')
+    # instruction := LEFT ARG during
+    @_('RIGHT ARG during')
     def instruction(self, p):
-        print("Turning Right")
-        if p[2]:
-          print("During {} sec".format(p[2]))
-        #define actions here
+        delay = p[2] if p[2] else 3
+        print("Turning Right During {} sec".format(delay))
+        motor.right(delay)
 
-    @_('LEFT ARG during ENDLINE')
+    # instruction := RIGHT ARG during
+    @_('LEFT ARG during')
     def instruction(self, p):
-        print("Turning left")
-        if p[2]:
-          print("During {} sec".format(p[2]))
-        #define actions here
+        delay = p[2] if p[2] else 3
+        print("Turning Left During {} sec".format(delay))
+        motor.left(delay)
 
+    # during := empty
     @_('')
     def during(self, p):
         pass
 
+    # during := DURING ARG
     @_('DURING ARG')
     def during(self, p):
-        return p[1]
-      
+       return float(p[1])
+    
+    # instruction := STOP
     @_('STOP')
     def instruction(self, p):
         print("Stopping!")
-        #define actions here   
+        motor.stop() 
 
 if __name__ == '__main__':
     import sys
@@ -98,5 +127,12 @@ if __name__ == '__main__':
     data = ''.join(open(sys.argv[1]).readlines())
     lexer = Lexer()
     parser = Parser()
-    parser.parse(lexer.tokenize(data))
+
+    try:
+        parser.parse(lexer.tokenize(data))
+    except KeyboardInterrupt:
+        print("Canceling...")
+
+    motor.cleanup()
+    exit()
 
