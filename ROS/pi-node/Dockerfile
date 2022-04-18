@@ -1,4 +1,4 @@
-FROM osrf/ros:foxy-desktop
+FROM arm64v8/ros:foxy
 
 SHELL ["/bin/bash", "-c"]
 
