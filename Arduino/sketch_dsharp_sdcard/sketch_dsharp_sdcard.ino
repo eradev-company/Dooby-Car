@@ -1,3 +1,7 @@
+// Simple parser for our D# language for controlling DoobyCar
+// This sketch reads a D# script from an SD card that's connected to Arduino
+// It parses the script line by line and launches the appropriate motor functions.
+
 #include <string.h>
 #include <SPI.h>
 #include <SD.h>
@@ -18,6 +22,7 @@ File root;
 enum Command { Forward, Backward, Right, Left, During,  Stop };
  
 void setup() {
+  
     Serial.begin(115200);
     delay(2000);
  
@@ -54,8 +59,6 @@ void loop() {
     
         // Construct current line string
         if( c != ' ' && c != '\n' ) {
-          //Serial.print("C : ");
-          //Serial.println(c);
           line = String(line) + String(c);
         }
         else {
@@ -104,8 +107,6 @@ void loop() {
                 reset();
             }
             else Serial.println("Unrecognized command");
-  
-            
           }
           line = String("");
           

@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cala Sant Vicenç - Mallorca",
+        "time": "2005-05-16T11:49:06Z",
+        "sym": "City"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.054223107,
+          39.921055008,
+          12.863281
+        ]
+      }
+    }
+  ]
+}

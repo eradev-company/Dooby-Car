@@ -5,12 +5,12 @@ class Lexer(Lexer):
     ignore = ' \t'
 
     # Tokens
-    FORWARD = r'FORWARD'
-    BACKWARD = r'BACKWARD'
-    LEFT = r'LEFT'
-    RIGHT = r'RIGHT'
-    DURING = r'DURING'
-    STOP = r'STOP'
+    FORWARD = r'Forward'
+    BACKWARD = r'Backward'
+    LEFT = r'Left'
+    RIGHT = r'Right'
+    DURING = r'During'
+    STOP = r'Stop'
     ARG = r'\d+'
     ENDLINE = r'\n+'
 
@@ -49,7 +49,7 @@ class Parser(Parser):
         print("Moving Backward")
         if p[2]:
           print("During {} sec".format(p[2]))
-          #define actions here
+        #define actions here
 
     @_('RIGHT ARG during ENDLINE')
     def instruction(self, p):
