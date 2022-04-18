@@ -6,7 +6,7 @@ services:
             context: ../
             dockerfile: pi-node/Dockerfile
         restart: always
-        command: ros2 node list
+        command: ros2 run dooby_pi pub
         network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
 
     husarnet:
