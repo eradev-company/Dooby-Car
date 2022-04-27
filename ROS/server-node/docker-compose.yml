@@ -6,7 +6,10 @@ services:
             context: ../
             dockerfile: server-node/Dockerfile
         restart: always
-        command: ros2 run dooby_interface dooby_interface #package node
+        volumes:
+            - ./config.rviz:/root/.rviz2/default.rviz
+            - ../ros2_ws/src:/app/ros2_ws/src
+        command: ros2 launch nav2_bringup bringup_launch.py params_file:=/app/ros2_ws/src/dooby_simulation/config/nav2_params.yaml map:=/app/ros2_ws/src/dooby_simulation/map/map.yaml #package node
         network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
 
     husarnet:
