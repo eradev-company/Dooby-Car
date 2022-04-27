@@ -29,6 +29,7 @@ RUN cd ros2_ws && \
 
 COPY server-node/cyclonedds.xml .
 COPY server-node/ros_entrypoint.sh /
+RUN chmod +x ros_entrypoint.sh
 
 ENTRYPOINT ["/ros_entrypoint.sh"]   
 CMD ["bash"]
