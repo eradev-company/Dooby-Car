@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'dooby_pi'
+package_name = 'dooby_interface'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'dooby_interface = dooby_pi.dooby_interface:main'
+            'dooby_interface = dooby_interface.dooby_interface:main'
         ],
     },
 )
