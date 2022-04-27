@@ -1,17 +1,20 @@
 version: '3.2'
 
 services:
-  # ROS 2 Foxy
-  foxy:
-    image: husarion/ros2-desktop-vnc:latest
+  # ROS 2 Galactic
+  galactic:
+    build:
+            context: ../
+            dockerfile: dev-node/Dockerfile
     restart: unless-stopped
     volumes:
       - ./config.rviz:/root/.rviz2/default.rviz
-      - ../ros2_ws/src:/app/src
-      - ./cyclonedds.xml:/cyclonedds.xml
+      - ../ros2_ws/src:/app/ros2_ws/src
+      - ./cyclonedds.xml:/cyclonedds.xml # remove this in production
     ports: 
       - 6080:80
     shm_size: '512m'
+    command: cd ros2_ws && colcon build
 
 
   husarnet:
@@ -27,4 +30,4 @@ services:
       - /dev/net/tun
     env_file: 
       - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
-    network_mode: service:foxy  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
+    network_mode: service:galactic  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 

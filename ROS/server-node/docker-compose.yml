@@ -1,12 +1,12 @@
 version: '2.3'
 
 services:
-    foxy:
+    galactic:
         build:
             context: ../
             dockerfile: server-node/Dockerfile
         restart: always
-        command: ros2 run dooby_pi pub #package node
+        command: ros2 run dooby_interface dooby_interface #package node
         network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
 
     husarnet:
