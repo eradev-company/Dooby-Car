@@ -12,6 +12,8 @@
             <Peers>
                 <Peer address="pi-node"/>
                 <Peer address="server-node"/>
+                <Peer address="dev-node"/>
+
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
         </Discovery>

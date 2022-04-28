@@ -1,11 +1,11 @@
-FROM arm64v8/ros:foxy
+FROM arm64v8/ros:galactic
 
 SHELL ["/bin/bash", "-c"]
 
 # Install ROS 2 deppendencies (Cyclone DDS)
 RUN sudo apt update && \
     sudo apt install -y \
-    ros-foxy-rmw-cyclonedds-cpp 
+    ros-galactic-rmw-cyclonedds-cpp 
 RUN sudo rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -13,11 +13,12 @@ WORKDIR /app
 # build custom ROS 2 nodes
 COPY ros2_ws ros2_ws/
 RUN cd ros2_ws && \
-    source /opt/ros/foxy/setup.bash && \
+    source /opt/ros/galactic/setup.bash && \
     colcon build
 
 COPY pi-node/cyclonedds.xml .
 COPY pi-node/ros_entrypoint.sh /
+RUN chmod +x ros_entrypoint.sh
 
 ENTRYPOINT ["/ros_entrypoint.sh"]   
 CMD ["bash"]

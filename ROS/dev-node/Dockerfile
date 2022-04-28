@@ -1,4 +1,4 @@
-FROM osrf/ros:galactic-desktop
+FROM tiryoh/ros2-desktop-vnc:galactic
 
 SHELL ["/bin/bash", "-c"]
 
@@ -27,9 +27,4 @@ RUN cd ros2_ws && \
     source /opt/ros/galactic/setup.bash && \
     colcon build
 
-COPY server-node/cyclonedds.xml .
-COPY server-node/ros_entrypoint.sh /
-RUN chmod +x ros_entrypoint.sh
-
-ENTRYPOINT ["/ros_entrypoint.sh"]   
 CMD ["bash"]
