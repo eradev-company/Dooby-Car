@@ -20,7 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'dooby_interface = dooby_interface.dooby_interface:main'
+            'dooby_interface = dooby_interface.dooby_interface:main',
+            'pub = dooby_interface.pub:main',
+            'sub = dooby_interface.sub:main'
         ],
     },
 )
