@@ -1,0 +1,15 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "dooby car control api",
+  "main": "connection.js",
+  "scripts": {
+    "test": "node connection.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eventemitter2": "^6.4.5",
+    "roslib": "^1.2.0"
+  }
+}

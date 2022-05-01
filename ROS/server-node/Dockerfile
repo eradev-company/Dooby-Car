@@ -13,19 +13,16 @@ RUN sudo apt update && \
 
 RUN sudo rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-
-# build custom ROS 2 nodes
-COPY ros2_ws ros2_ws/
-RUN cd ros2_ws && \
-    source /opt/ros/galactic/setup.bash && \
-    colcon build
-
-COPY server-node/cyclonedds.xml .
-COPY server-node/ros_entrypoint.sh /
+COPY cyclonedds.xml /
+COPY ros_entrypoint.sh /
 COPY server-node/config /config
-
 RUN chmod +x /ros_entrypoint.sh
 
+ENV CYCLONEDDS_URI=file:///cyclonedds.xml
+ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+
 ENTRYPOINT ["/ros_entrypoint.sh"]   
-CMD ["bash"]
+
+CMD ["bash", "-c", "ros2 run rosbridge_server rosbridge_websocket & \
+                ros2 launch nav2_bringup bringup_launch.py \
+                params_file:=/config/nav2_params.yaml map:=/config/map.yaml"]

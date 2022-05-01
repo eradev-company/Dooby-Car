@@ -1,23 +1,24 @@
 version: '2.3'
 
 services:
-    ros2-web-bridge:
-        build:
-            context: ../
-            dockerfile: server-node/Dockerfile
+    api:
+        image: node:8.16.0
         restart: always
-        command: ros2 run rosbridge_server rosbridge_websocket 
-        network_mode: service:husarnet  
+        depends_on:
+            - galactic
+        volumes:
+            - ../api:/app/
+        command: bash -c "cd /app && npm install && sleep 10 && npm run test"
+        network_mode: service:husarnet
+
     galactic:
+        container_name: galactic
         build:
             context: ../
             dockerfile: server-node/Dockerfile
         restart: always
         depends_on: 
             - husarnet
-        volumes:
-            - ../ros2_ws/src:/app/ros2_ws/src
-        command: ros2 launch nav2_bringup bringup_launch.py params_file:=/config/nav2_params.yaml map:=/config/map.yaml 
         network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
 
     husarnet:
@@ -27,11 +28,11 @@ services:
             - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
         sysctls:
             - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
-        ports:
-            - 9090:9090
         cap_add:
             - NET_ADMIN
         devices:
             - /dev/net/tun
+        environment:
+            - HOSTNAME=server-node
         env_file: 
-            - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
+            - ../.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
