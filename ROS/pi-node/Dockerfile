@@ -1,4 +1,5 @@
-FROM arm64v8/ros:galactic
+#FROM arm64v8/ros:galactic
+FROM osrf/ros:galactic-desktop
 
 SHELL ["/bin/bash", "-c"]
 
@@ -16,9 +17,12 @@ RUN cd ros2_ws && \
     source /opt/ros/galactic/setup.bash && \
     colcon build
 
-COPY pi-node/cyclonedds.xml .
-COPY pi-node/ros_entrypoint.sh /
-RUN chmod +x ros_entrypoint.sh
+COPY cyclonedds.xml /
+COPY ros_entrypoint.sh /
+RUN chmod +x /ros_entrypoint.sh
+
+ENV CYCLONEDDS_URI=file:///cyclonedds.xml
+ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 ENTRYPOINT ["/ros_entrypoint.sh"]   
 CMD ["bash"]

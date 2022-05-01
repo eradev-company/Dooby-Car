@@ -13,9 +13,9 @@
                 <Peer address="pi-node"/>
                 <Peer address="server-node"/>
                 <Peer address="dev-node"/>
-
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
+            <MaxAutoParticipantIndex>20</MaxAutoParticipantIndex>
         </Discovery>
         <Internal>
             <Watermarks>

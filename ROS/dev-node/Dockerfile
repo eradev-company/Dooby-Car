@@ -17,6 +17,7 @@ RUN sudo apt update && \
     ros-galactic-mapviz-plugins \
     ros-galactic-tile-map \
     ros-galactic-multires-image 
+
 RUN sudo rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -26,5 +27,10 @@ COPY ros2_ws ros2_ws/
 RUN cd ros2_ws && \
     source /opt/ros/galactic/setup.bash && \
     colcon build
+
+COPY ./cyclonedds.xml /
+
+ENV CYCLONEDDS_URI=file:///cyclonedds.xml
+ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 CMD ["bash"]

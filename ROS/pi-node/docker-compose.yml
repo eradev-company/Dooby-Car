@@ -20,5 +20,7 @@ services:
             - NET_ADMIN
         devices:
             - /dev/net/tun
+        environment:
+            - HOSTNAME=pi-node
         env_file: 
-            - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
+            - ../.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
