@@ -1,4 +1,4 @@
-image: blank_map.png
+image: obstacle.png
 resolution: 0.5
 origin: [-25, -25, 0]
 negate: 0

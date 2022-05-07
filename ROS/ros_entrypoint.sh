@@ -11,7 +11,4 @@ fi
 # wait for vpn to be connected
 sleep 10
 
-export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-export CYCLONEDDS_URI=file:///cyclonedds.xml
-
 exec "$@"

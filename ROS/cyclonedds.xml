@@ -15,7 +15,7 @@
                 <Peer address="dev-node"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
-            <MaxAutoParticipantIndex>20</MaxAutoParticipantIndex>
+            <MaxAutoParticipantIndex>30</MaxAutoParticipantIndex>
         </Discovery>
         <Internal>
             <Watermarks>
