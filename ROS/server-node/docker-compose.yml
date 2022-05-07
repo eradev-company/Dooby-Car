@@ -1,18 +1,42 @@
 version: '2.3'
 
 services:
-    api:
-        image: node:8.16.0
+    tensorflow:
+        build:
+            context: ../
+            dockerfile: server-node/ai.Dockerfile
+        container_name: tensorflow
         restart: always
+        depends_on:
+            - husarnet
+        volumes:
+            - ../notebooks:/app/notebooks
+        network_mode: service:husarnet
+
+    apipy:
+        image: python:3.9
+        restart: always
+        container_name: apipy
         depends_on:
             - galactic
         volumes:
-            - ../api:/app/
+            - ../api/python:/app/
+        command: bash -c "cd /app && pip install -r requirements.txt && python3 connection.py"
+        network_mode: service:husarnet
+
+    apijs:
+        image: node:8.16.0
+        restart: always
+        container_name: apijs
+        depends_on:
+            - galactic
+        volumes:
+            - ../api/js:/app/
         command: bash -c "cd /app && npm install && sleep 10 && npm run test"
         network_mode: service:husarnet
 
     galactic:
-        container_name: galactic
+        container_name: server-galactic
         build:
             context: ../
             dockerfile: server-node/Dockerfile
@@ -24,6 +48,7 @@ services:
     husarnet:
         image: husarnet/husarnet
         restart: unless-stopped
+        container_name: husarnet
         volumes:
             - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
         sysctls:
@@ -32,6 +57,8 @@ services:
             - NET_ADMIN
         devices:
             - /dev/net/tun
+        ports:
+          - "8080:8888"
         environment:
             - HOSTNAME=server-node
         env_file: 
