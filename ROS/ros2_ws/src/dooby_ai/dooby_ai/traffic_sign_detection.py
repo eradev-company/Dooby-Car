@@ -6,30 +6,34 @@ from rclpy.qos import QoSProfile
 from std_msgs.msg import String
 from sensor_msgs.msg import Image
 
-#import tensorflow as tf
-#import numpy as np
-#import cv2
-
 
 class CameraSubscriber(Node):
 
     def __init__(self):
         
-            # set qos profile
-        qos_profile = QoSProfile(depth=10)
+        # set qos profile
+        qos_profile = QoSProfile(depth=1)
         qos_profile.reliability = QoSReliabilityPolicy.BEST_EFFORT
     
-        super().__init__('camera_subscriber')
+        super().__init__('traffic_sign_detector')
         self.subscription = self.create_subscription(
             Image,
             '/camera/image_raw',
             self.listener_callback,
             qos_profile)
         self.subscription  # prevent unused variable warning
+        
+        self.publisher = self.create_publisher(
+            Image,
+            '/camera/image_annotated',
+            10)
 
     def listener_callback(self, msg):
         self.get_logger().info('Recieved an image.')
-
+        self.publisher.publish(msg)
+        
+        self.get_logger().info('Published an image.')
+        
 
 def main(args=None):
     

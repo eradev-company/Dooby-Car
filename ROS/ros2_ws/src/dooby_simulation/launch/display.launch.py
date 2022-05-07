@@ -6,7 +6,7 @@ import os
 def generate_launch_description():
     pkg_share = launch_ros.substitutions.FindPackageShare(package='dooby_simulation').find('dooby_simulation')
     default_model_path = os.path.join(pkg_share, 'src/description/dooby_simulation.urdf')
-    default_rviz_config_path = os.path.join(pkg_share, 'rviz/dooby_config.rviz')
+    default_rviz_config_path = os.path.join(pkg_share, 'rviz/camera_config.rviz')
     world_path=os.path.join(pkg_share, 'world/signs_world.sdf')
     
     robot_state_publisher_node = launch_ros.actions.Node(

@@ -1,20 +1,15 @@
 Panels:
   - Class: rviz_common/Displays
-    Help Height: 78
+    Help Height: 71
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /Global Options1
         - /Status1
         - /TF1
-        - /transformed_global_path1
-        - /path1
-        - /received_gloabl_path1
-        - /local_path1
+        - /annotated1
       Splitter Ratio: 0.5
-    Tree Height: 74
-  - Class: nav2_rviz_plugins/Navigation 2
-    Name: Navigation 2
+    Tree Height: 71
   - Class: nav2_rviz_plugins/Navigation 2
     Name: Navigation 2
 Visualization Manager:
@@ -65,10 +60,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        camera_depth_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         camera_link:
           Alpha: 1
           Show Axes: false
@@ -84,17 +75,17 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        front_caster:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         imu_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lidar_link:
+        steerwhl_l_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        steerwhl_r_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -113,23 +104,21 @@ Visualization Manager:
           Value: true
         base_link:
           Value: true
-        camera_depth_frame:
-          Value: true
         camera_link:
           Value: true
         drivewhl_l_link:
           Value: true
         drivewhl_r_link:
           Value: true
-        front_caster:
-          Value: true
         imu_link:
-          Value: true
-        lidar_link:
           Value: true
         map:
           Value: true
         odom:
+          Value: true
+        steerwhl_l_link:
+          Value: true
+        steerwhl_r_link:
           Value: true
       Marker Scale: 0.30000001192092896
       Name: TF
@@ -137,25 +126,24 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        map:
-          {}
         odom:
           base_link:
             base_footprint:
               {}
             camera_link:
-              camera_depth_frame:
-                {}
+              {}
             drivewhl_l_link:
               {}
             drivewhl_r_link:
               {}
-            front_caster:
-              {}
             imu_link:
               {}
-            lidar_link:
+            steerwhl_l_link:
               {}
+            steerwhl_r_link:
+              {}
+          map:
+            {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988079071
@@ -183,7 +171,7 @@ Visualization Manager:
       Enabled: true
       Name: Waypoints
       Namespaces:
-        "": true
+        {}
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -201,7 +189,35 @@ Visualization Manager:
       Length: 0.30000001192092896
       Line Style: Lines
       Line Width: 0.029999999329447746
-      Name: transformed_global_path
+      Name: Unsmoothed_Plan
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /unsmoothed_plan
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz_default_plugins/Path
+      Color: 170; 0; 127
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Global_Plan
       Offset:
         X: 0
         Y: 0
@@ -229,63 +245,7 @@ Visualization Manager:
       Length: 0.30000001192092896
       Line Style: Lines
       Line Width: 0.029999999329447746
-      Name: path
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
-      Radius: 0.029999999329447746
-      Shaft Diameter: 0.10000000149011612
-      Shaft Length: 0.10000000149011612
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        Filter size: 10
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /plan
-      Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz_default_plugins/Path
-      Color: 170; 0; 127
-      Enabled: true
-      Head Diameter: 0.30000001192092896
-      Head Length: 0.20000000298023224
-      Length: 0.30000001192092896
-      Line Style: Lines
-      Line Width: 0.029999999329447746
-      Name: received_gloabl_path
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
-      Radius: 0.029999999329447746
-      Shaft Diameter: 0.10000000149011612
-      Shaft Length: 0.10000000149011612
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        Filter size: 10
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /received_global_plan
-      Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz_default_plugins/Path
-      Color: 255; 0; 0
-      Enabled: true
-      Head Diameter: 0.30000001192092896
-      Head Length: 0.20000000298023224
-      Length: 0.30000001192092896
-      Line Style: Lines
-      Line Width: 0.029999999329447746
-      Name: local_path
+      Name: Local_Plan
       Offset:
         X: 0
         Y: 0
@@ -303,10 +263,40 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /local_plan
       Value: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: annotated
+      Normalize Range: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /camera/image_annotated
+      Value: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: original
+      Normalize Range: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /camera/image_raw
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: map
+    Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -325,7 +315,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 4.686433792114258
+      Distance: 9.116987228393555
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -340,10 +330,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6003982424736023
+      Pitch: 0.8003982305526733
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.7853981852531433
+      Yaw: 0.8153981566429138
     Saved: ~
 Window Geometry:
   Displays:
@@ -353,7 +343,11 @@ Window Geometry:
   Hide Right Dock: false
   Navigation 2:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000001000000000000015600000214fc0200000003fb000000100044006900730070006c006100790073010000003e000000d5000000cb00fffffffb00000018004e0061007600690067006100740069006f006e00200032000000012c000001260000012600fffffffb00000018004e0061007600690067006100740069006f006e002000320100000119000001390000013900ffffff000003fa0000021400000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000001000000000000015600000214fc0200000004fb000000100044006900730070006c006100790073010000003e000000cb000000cb00fffffffb00000018004e0061007600690067006100740069006f006e002000320000000119000001390000013900fffffffb00000010006f0072006900670069006e0061006c010000010f0000009a0000002800fffffffb000000120061006e006e006f0074006100740065006401000001af000000a30000002800ffffff000003fa0000021400000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Width: 1366
   X: 0
   Y: 0
+  annotated:
+    collapsed: false
+  original:
+    collapsed: false
