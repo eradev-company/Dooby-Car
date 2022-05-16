@@ -7,11 +7,10 @@ services:
             context: ../
             dockerfile: dev-node/Dockerfile
     restart: unless-stopped
-
+    container_name: dev-node
     volumes:
       - ../ros2_ws/src:/app/ros2_ws/src
     shm_size: '512m'
-    command: ros2 launch dooby_simulation display.launch.py
     network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
     env_file: 
       - ../.env 

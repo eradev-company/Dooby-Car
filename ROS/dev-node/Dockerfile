@@ -33,4 +33,8 @@ COPY ./cyclonedds.xml /
 ENV CYCLONEDDS_URI=file:///cyclonedds.xml
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
+RUN echo "source /opt/ros/galactic/setup.bash" >> ~/.bashrc && \
+    echo "source /app/ros2_ws/install/setup.bash" >> ~/.bashrc && \
+    source ~/.bashrc
+
 CMD ["bash"]
