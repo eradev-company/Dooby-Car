@@ -21,8 +21,11 @@ setup(
     entry_points={
         'console_scripts': [
             'dooby_interface = dooby_interface.dooby_interface:main',
-            'pub = dooby_interface.pub:main',
-            'sub = dooby_interface.sub:main'
+            'dooby_imu = dooby_interface.dooby_imu:main',
+            'dooby_gps = dooby_interface.dooby_gps:main',
+            'dooby_cam = dooby_interface.dooby_cam:main'
+
+
         ],
     },
 )

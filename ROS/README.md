@@ -1,5 +1,8 @@
 # ROS Workspace
 
+
+### install docker on rasp  
+please refer to [https://dev.to/elalemanyo/how-to-install-docker-and-docker-compose-on-raspberry-pi-1mo](this blog)
 ## How to run
   
 first, delete old vpn adresses on https://app.husarnet.com/  

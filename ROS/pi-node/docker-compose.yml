@@ -10,7 +10,8 @@ services:
         devices:
             - /dev/gpiomem
             - /dev/video0
-        command: ros2 run dooby_interface dooby_interface
+
+        command: ros2 launch /app/ros2_ws/src/dooby_interface/launch/interface_launch.py
         network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
 
     husarnet:
