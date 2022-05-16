@@ -35,6 +35,16 @@ services:
         command: bash -c "cd /app && npm install && sleep 10 && npm run test"
         network_mode: service:husarnet
 
+    bridge:
+        container_name: bridge
+        build:
+            context: ../
+            dockerfile: server-node/web.Dockerfile
+        restart: always
+        depends_on: 
+            - husarnet
+        network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
+
     galactic:
         container_name: server-galactic
         build:
@@ -59,6 +69,7 @@ services:
             - /dev/net/tun
         ports:
           - "8080:8888"
+          - "9090:9090"
         environment:
             - HOSTNAME=server-node
         env_file: 
