@@ -22,3 +22,10 @@ def redOn():
         GPIO.output(LED_RED,GPIO.HIGH) #LED on
     except KeyboardInterrupt:
         GPIO.cleanup()
+        
+def turnOFF():
+    try:
+        GPIO.output(LED_GREEN,GPIO.LOW) #LED off
+        GPIO.output(LED_RED,GPIO.LOw) #LED on
+    except KeyboardInterrupt:
+        GPIO.cleanup()
