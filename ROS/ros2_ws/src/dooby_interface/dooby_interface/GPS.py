@@ -1,16 +1,15 @@
-from gps import *
 
+import serial
+import time
+import string
+import pynmea2
 
-def getPositionData():
-    gpsd = gps(mode=WATCH_ENABLE)
-    nx = gpsd.next()
-    # For a list of all supported classes and fields refer to:
-    # https://gpsd.gitlab.io/gpsd/gpsd_json.html
-    if nx['class'] == 'TPV':
-        latitude = getattr(nx,'lat', "Unknown")
-        longitude = getattr(nx,'lon', "Unknown")
-    return latitude, longitude
+port="/dev/serial0"
+ser=serial.Serial(port, baudrate=9600, timeout=0.5)
 
-lat, lon = getPositionData()
-print(lat)
-print(lon)
+def read_data():
+    data=ser.readline()
+    if ( data[0:6].decode("utf-8") == "$GPRMC" ):
+        msg=pynmea2.parse(data.decode("utf-8"))
+        return msg.latitude, msg.longitude
+        

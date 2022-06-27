@@ -2,31 +2,36 @@ import rclpy
 from dooby_interface import GPS
 
 from rclpy.node import Node
-from sensor_msgs.msg import NavSatFix
+from geometry_msgs.msg import PoseStamped
+
+map_center = [36.705624,3.170748]
 
 
 class GPSPublisher(Node):
     def __init__(self):
         super().__init__('gps_publisher')
         self.publisher_ = self.create_publisher(
-            NavSatFix,
+            PoseStamped,
             'gps',
             10)
-        timer_period = 0.5  # seconds
+        timer_period = 2.0  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.i = 0
 
 
     def timer_callback(self):
         # Create a new message
-        x, y = GPS.getPositionData()
-        msg = NavSatFix()
+        lat, long = GPS.getPositionData()
+        msg = PoseStamped()
         msg.header.stamp = self.get_clock.to_msg()
         msg.header.frame_id = 'gps'
-        msg.latitude = x
-        msg.longitude = y
-        msg.altitude = 0
+        # convert lat and long to x and y
+        x = (lat - map_center[0]) * 100000
+        y = (long - map_center[1]) * 100000
         
+        # set covariance
+        msg.pose.covariance = [0.5, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.5]
+
         # Publish the message
         self.publisher_.publish(msg)
         self.get_logger().info('Published gps coordinates.')

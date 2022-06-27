@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO          
 from time import sleep
 
-in1 = 24
+in1 = 18
 in2 = 23
 in3= 6
 in4 = 5
@@ -28,7 +28,7 @@ l.start(duty_cycle)
    
    
 def set_speed(linear_speed, angular_speed):
-    default_delay = 3
+    default_delay = 0.01
     if linear_speed > 0:
         forward(linear_speed , default_delay)
     elif linear_speed < 0:
@@ -36,9 +36,11 @@ def set_speed(linear_speed, angular_speed):
     elif linear_speed == 0:
         stop()
         if angular_speed > 0:
-            right(angular_speed , default_delay)
+            left(angular_speed , default_delay)
         elif  angular_speed < 0:
-            left(-angular_speed , default_delay)
+            right(-angular_speed , default_delay)
+        else:
+            stop()
         
     
     return

@@ -14,12 +14,11 @@ class CamPublisher(Node):
             Image,
             '/camera/image_raw',
             10)
-        timer_period = 0.5  # seconds
+        timer_period = 1  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.i = 0
         self.bridge = CvBridge()
         self.cap = cv2.VideoCapture(0)
-        self.bridge = CvBridge()
 
 
     def get_image(self):
@@ -33,7 +32,7 @@ class CamPublisher(Node):
     def timer_callback(self):
         frame = self.get_image()
         #reshape the frame to be a numpy array
-        frame = cv2.resize(frame, (128, 96))
+        frame = cv2.resize(frame, (320, 256))
         # use cvbridge to convert the frame to a ROS message
         msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
         msg.header.stamp = self.get_clock().now().to_msg()

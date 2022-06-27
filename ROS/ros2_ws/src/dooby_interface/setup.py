@@ -23,8 +23,9 @@ setup(
             'dooby_interface = dooby_interface.dooby_interface:main',
             'dooby_imu = dooby_interface.dooby_imu:main',
             'dooby_gps = dooby_interface.dooby_gps:main',
-            'dooby_cam = dooby_interface.dooby_cam:main'
-
+            'dooby_cam = dooby_interface.dooby_cam:main',
+            'dooby_sonar = dooby_interface.dooby_sonar:main',
+            'clock = dooby_interface.clock:main'
 
         ],
     },

@@ -22,10 +22,27 @@ def generate_launch_description():
             name='cam',
             parameters=[{'use_sim_time': True}]
         ),
+
         # Node(
         #     package='dooby_interface',
         #     executable='dooby_gps',
         #     name='gps',
         #     parameters=[{'use_sim_time': True}]
-        # )
+        # ),
+
+        Node(
+            package='dooby_interface',
+            executable='dooby_sonar',
+            name='sonar',
+            parameters=[{'use_sim_time': True}]
+        ),
+
+            
+        Node(
+            package='dooby_interface',
+            executable='clock',
+            name='clock_publisher',
+            parameters=[{'use_sim_time': False}]
+        )
+        
     ])
