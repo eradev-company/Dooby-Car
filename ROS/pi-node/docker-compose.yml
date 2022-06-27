@@ -1,31 +1,59 @@
 version: '2.3'
 
 services:
-    galactic:
+
+    # ml:
+    #     build:
+    #         context: ../
+    #         dockerfile: pi-node/Dockerfile
+    #     restart: always
+    #     privileged: true
+    #     devices:
+    #         - /dev/gpiomem
+    #         - /dev/video0
+
+    #     command: ros2 dooby_ai objection_detection
+    #     network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
+
+
+    interface:
         build:
             context: ../
             dockerfile: pi-node/Dockerfile
         restart: always
         privileged: true
+        volumes:
+            - ../ros2_ws/src:/app/ros2_ws/src
+            - /dev:/dev
         devices:
             - /dev/gpiomem
             - /dev/video0
-
         command: ros2 launch /app/ros2_ws/src/dooby_interface/launch/interface_launch.py
-        network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
+        network_mode: host
+        # when using VPN:  
+        # network_mode: service:husarnet # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
 
-    husarnet:
-        image: husarnet/husarnet
-        restart: unless-stopped
+    nav2:
+        build:
+            context: ../
+            dockerfile: server-node/arm.Dockerfile
+        restart: always
         volumes:
-            - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
-        sysctls:
-            - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
-        cap_add:
-            - NET_ADMIN
-        devices:
-            - /dev/net/tun
-        environment:
-            - HOSTNAME=pi-node
-        env_file: 
-            - ../.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
+            - ./config:/config
+        network_mode: service:interface
+
+    # husarnet:
+    #     image: husarnet/husarnet
+    #     restart: unless-stopped
+    #     volumes:
+    #         - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+    #     sysctls:
+    #         - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
+    #     cap_add:
+    #         - NET_ADMIN
+    #     devices:
+    #         - /dev/net/tun
+    #     environment:
+    #         - HOSTNAME=pi-node
+    #     env_file: 
+    #         - ../.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there

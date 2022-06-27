@@ -1,6 +1,4 @@
-FROM tensorflow/tensorflow:2.8.0-jupyter
-
-EXPOSE 8888
+FROM tensorflow/tensorflow:2.8.0
 
 SHELL ["/bin/bash", "-c"]
 
@@ -70,6 +68,8 @@ RUN apt-get update && apt-get install -y \
 
 # Install object detection frameworks
 RUN pip install -U opencv-python-headless
+
+RUN sudo apt install -y ros-galactic-cv-bridge ros-galactic-vision-opencv
 
 WORKDIR /app
 

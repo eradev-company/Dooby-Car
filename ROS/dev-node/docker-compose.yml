@@ -1,33 +1,42 @@
-version: '3.2'
+version: '2.3'
 
 services:
+
   # ROS 2 Galactic
-  galactic:
+  dev:
     build:
-            context: ../
-            dockerfile: dev-node/Dockerfile
+      context: ../
+      dockerfile: dev-node/Dockerfile
     restart: unless-stopped
     container_name: dev-node
+    privileged: true
     volumes:
       - ../ros2_ws/src:/app/ros2_ws/src
+      - ../server-node/config:/config
+    devices:
+      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
     shm_size: '512m'
-    network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
     env_file: 
       - ../.env 
-  husarnet:
-    image: husarnet/husarnet
-    restart: unless-stopped
-    ports: 
-      - 6080:80
-    volumes:
-      - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
-    sysctls:
-      - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
-    cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun
-    environment:
-      - HOSTNAME=dev-node
-    env_file: 
-      - ../.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
+    network_mode: host
+    #     network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
+
+
+  # husarnet:
+  #   image: husarnet/husarnet
+  #   restart: unless-stopped
+  #   ports: 
+  #     - 6080:80
+  #   volumes:
+  #     - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+  #   sysctls:
+  #     - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
+  #   cap_add:
+  #     - NET_ADMIN
+  #   devices:
+  #     - /dev/net/tun
+  #   environment:
+  #     - HOSTNAME=dev-node
+  #   env_file: 
+  #     - ../.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there

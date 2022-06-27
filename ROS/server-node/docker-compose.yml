@@ -1,64 +1,51 @@
 version: '2.3'
 
 services:
-    tensorflow:
-        build:
-            context: ../
-            dockerfile: server-node/ai.Dockerfile
-        container_name: tensorflow
-        restart: always
-        depends_on:
-            - husarnet
-        volumes:
-            - ../notebooks:/app/notebooks
-        network_mode: service:husarnet
+    # tensorflow:
+    #     build:
+    #         context: ../
+    #         dockerfile: server-node/ai.Dockerfile
+    #     restart: always
+    #     depends_on:
+    #         - husarnet
+    #     volumes:
+    #         - ../notebooks:/app/notebooks
+    #     network_mode: service:husarnet
 
-    apipy:
-        image: python:3.9
-        restart: always
-        container_name: apipy
-        depends_on:
-            - galactic
-        volumes:
-            - ../api/python:/app/
-        command: bash -c "cd /app && pip install -r requirements.txt && python3 connection.py"
-        network_mode: service:husarnet
+    # apipy:
+    #     image: python:3.9
+    #     restart: always
+    #     depends_on:
+    #         - nav2
+    #     volumes:
+    #         - ../api/python:/app/
+    #     command: bash -c "cd /app && pip install -r requirements.txt && python3 connection.py"
+    #     network_mode: service:husarnet
 
-    apijs:
-        image: node:8.16.0
-        restart: always
-        container_name: apijs
-        depends_on:
-            - galactic
-        volumes:
-            - ../api/js:/app/
-        command: bash -c "cd /app && npm install && sleep 10 && npm run test"
-        network_mode: service:husarnet
+    # bridge:
+    #     build:
+    #         context: ../
+    #         dockerfile: server-node/web.Dockerfile
+    #     restart: always
+    #     depends_on: 
+    #         - husarnet
+    #     network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
 
-    bridge:
-        container_name: bridge
-        build:
-            context: ../
-            dockerfile: server-node/web.Dockerfile
-        restart: always
-        depends_on: 
-            - husarnet
-        network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
-
-    galactic:
-        container_name: server-galactic
+    nav2:
         build:
             context: ../
             dockerfile: server-node/Dockerfile
         restart: always
+        volumes:
+            - ./config:/config
         depends_on: 
             - husarnet
         network_mode: service:husarnet  # This is the most important line in this setup. This will put the Husarnet Client in the same network namespace as your app 
+        # network_mode : host  # for local network
 
     husarnet:
         image: husarnet/husarnet
         restart: unless-stopped
-        container_name: husarnet
         volumes:
             - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
         sysctls:
@@ -67,9 +54,9 @@ services:
             - NET_ADMIN
         devices:
             - /dev/net/tun
-        ports:
-          - "8080:8888"
-          - "9090:9090"
+        # uncomment these line to expose ros-bridge
+        # ports:
+        #   - "9090:9090"
         environment:
             - HOSTNAME=server-node
         env_file: 
