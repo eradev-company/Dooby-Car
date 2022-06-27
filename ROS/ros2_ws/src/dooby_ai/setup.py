@@ -20,7 +20,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'traffic_sign_detection = dooby_ai.traffic_sign_detection:main'
+            'object_detection = dooby_ai.object_detection:main',
+            'depth_estimation = dooby_ai.depth_estimation:main',
+            'lane_detection = dooby_ai.lane_detection:main',
+            'yolo_detection = dooby_ai.yolo_detection:main'
         ],
     },
 )
