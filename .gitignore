@@ -1,1 +1,5 @@
 *__pycache
+test.py
+
+# Remove __pycache__ directory
+rm -rf __pycache__

@@ -1,1 +1,15 @@
-{"car_id": 1, "socket_id": null, "battery": 90, "speed": 0, "reservation_id": 17, "temperature": 30, "etat": "disponible", "location_x": 37.1700259, "location_y": 3.0990259, "parking_lat": 3.25588, "parking_lon": 3.75568, "locked": true, "client_id": "13", "matricule": 1002512116}
+{"car_id": 1, 
+    "socket_id": null, 
+    "battery": 90, 
+    "speed": 0, 
+    "reservation_id": 17, 
+    "temperature": 30, 
+    "etat": "disponible", 
+    "max-temperature": 100,
+    "location_x": 37.1700259, 
+    "location_y": 3.0990259, 
+    "parking_lat": 3.25588, 
+    "parking_lon": 3.75568, 
+    "locked": true, 
+    "client_id": "13", 
+    "matricule": 1002512116}

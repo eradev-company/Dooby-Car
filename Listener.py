@@ -9,6 +9,7 @@ import requests
 try:
     with open('config.json') as f:
         config = json.load(f)
+        f.close()
 except FileNotFoundError:
     try:
         import config
@@ -16,10 +17,12 @@ except FileNotFoundError:
         raise SomeMoreAopropriateError()
     with open('config.json', 'w') as f:
         json.dump(config, f)
+        f.close()
         
 def updateConfig():
     a_file = open("config.json", "w")
     json.dump(config, a_file)
+    a_file.close()
 
 sio = socketio.Client()
 
@@ -50,6 +53,7 @@ def on_message(data):
     config['client_id'] = received['client_id']
     with open('config.json', 'w') as f:
         json.dump(config, f)
+        f.close()
         
         
 @sio.on('cancel-ride-notif')
