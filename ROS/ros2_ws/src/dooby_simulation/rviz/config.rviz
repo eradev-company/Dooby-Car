@@ -1,6 +1,6 @@
 Panels:
   - Class: rviz_common/Displays
-    Help Height: 71
+    Help Height: 70
     Name: Displays
     Property Tree Widget:
       Expanded:
@@ -9,7 +9,7 @@ Panels:
         - /TF1
         - /annotated1
       Splitter Ratio: 0.5
-    Tree Height: 71
+    Tree Height: 70
   - Class: nav2_rviz_plugins/Navigation 2
     Name: Navigation 2
 Visualization Manager:
@@ -126,24 +126,23 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          base_link:
-            base_footprint:
-              {}
-            camera_link:
-              {}
-            drivewhl_l_link:
-              {}
-            drivewhl_r_link:
-              {}
-            imu_link:
-              {}
-            steerwhl_l_link:
-              {}
-            steerwhl_r_link:
-              {}
-          map:
-            {}
+        map:
+          odom:
+            base_link:
+              base_footprint:
+                {}
+              camera_link:
+                {}
+              drivewhl_l_link:
+                {}
+              drivewhl_r_link:
+                {}
+              imu_link:
+                {}
+              steerwhl_l_link:
+                {}
+              steerwhl_r_link:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988079071
@@ -273,13 +272,12 @@ Visualization Manager:
       Topic:
         Depth: 5
         Durability Policy: Volatile
-        Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Best Effort
         Value: /camera/image_annotated
       Value: true
     - Class: rviz_default_plugins/Image
-      Enabled: true
+      Enabled: false
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -288,15 +286,84 @@ Visualization Manager:
       Topic:
         Depth: 5
         Durability Policy: Volatile
-        Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Best Effort
         Value: /camera/image_raw
+      Value: false
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz_default_plugins/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /plan
+      Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: costmap
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /global_costmap/costmap
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /global_costmap/costmap_updates
+      Use Timestamp: false
+      Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: local-costmap
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /local_costmap/costmap
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /local_costmap/costmap_updates
+      Use Timestamp: false
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: odom
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -315,7 +382,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 9.116987228393555
+      Distance: 16.068593978881836
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -330,23 +397,23 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8003982305526733
+      Pitch: 0.44539839029312134
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.8153981566429138
+      Yaw: 2.905400037765503
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 623
+  Height: 678
   Hide Left Dock: false
   Hide Right Dock: false
   Navigation 2:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000001000000000000015600000214fc0200000004fb000000100044006900730070006c006100790073010000003e000000cb000000cb00fffffffb00000018004e0061007600690067006100740069006f006e002000320000000119000001390000013900fffffffb00000010006f0072006900670069006e0061006c010000010f0000009a0000002800fffffffb000000120061006e006e006f0074006100740065006401000001af000000a30000002800ffffff000003fa0000021400000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
-  Width: 1366
-  X: 0
-  Y: 0
+  QMainWindow State: 000000ff00000000fd00000001000000000000015600000250fc0200000004fb000000100044006900730070006c006100790073010000003b000000c7000000c700fffffffb00000018004e0061007600690067006100740069006f006e002000320000000119000001390000012300fffffffb00000010006f0072006900670069006e0061006c000000010f0000009a0000002800fffffffb000000120061006e006e006f007400610074006500640100000108000001830000002800ffffff000003b00000025000000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Width: 1292
+  X: 74
+  Y: 27
   annotated:
     collapsed: false
   original:
