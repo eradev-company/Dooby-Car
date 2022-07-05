@@ -51,3 +51,5 @@ the server node runs "Nav2" stack
 ![3D Road](images/Screenshot4.png)
 ![Obstacle Detection](images/Screenshot5.png)
 ![Trajectory Planning](images/Screenshot6.png)
+![Obstacle Detection](images/Screenshot7.png)
+![Trajectory Planning](images/Screenshot8.png)
